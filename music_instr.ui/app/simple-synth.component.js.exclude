@@ -1,0 +1,76 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var SimpleSynthComponent = (function () {
+    function SimpleSynthComponent(window) {
+        this.window = window;
+        this.initFrequencies();
+        this.audioCtx = new AudioContext(); //(window.AudioContext || window.webkitAudioContext)();
+        this.oscillator = this.audioCtx.createOscillator();
+        this.oscillator.type = this.oscillator.SINE;
+        this.oscillator.frequency.value = this.frequencies["C0"]; // value in hertz
+        this.oscillator.start(0);
+        this.volumeFilter = this.audioCtx.createGain();
+        this.volumeFilter.gain.value = 0;
+        this.oscillator.connect(this.volumeFilter);
+        this.volumeFilter.connect(this.audioCtx.destination);
+        this.volume = 0.5;
+    }
+    ;
+    SimpleSynthComponent.prototype.playSound = function (frequency) {
+        this.oscillator.frequency.value = frequency;
+        this.volumeFilter.gain.value = this.volume;
+    };
+    ;
+    SimpleSynthComponent.prototype.muteSound = function () {
+        this.volumeFilter.gain.value = 0;
+    };
+    ;
+    SimpleSynthComponent.prototype.initFrequencies = function () {
+        this.frequencies = {};
+        this.frequencies["C0"] = 261.626;
+        this.frequencies["C#0"] = 277.183;
+        this.frequencies["D0"] = 293.665;
+        this.frequencies["D#0"] = 311.127;
+        this.frequencies["E0"] = 329.628;
+        this.frequencies["F0"] = 349.228;
+        this.frequencies["F#0"] = 369.994;
+    };
+    ;
+    SimpleSynthComponent.prototype.playSoundWithKeyboard = function (event) {
+        this.playSound(this.frequencies["C0"]);
+    };
+    SimpleSynthComponent.prototype.muteSoundWithKeyboard = function (event) {
+        this.muteSound();
+    };
+    __decorate([
+        core_1.HostListener('document:keydown', ['$event']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [KeyboardEvent]), 
+        __metadata('design:returntype', void 0)
+    ], SimpleSynthComponent.prototype, "playSoundWithKeyboard", null);
+    __decorate([
+        core_1.HostListener('document:keyup', ['$event']), 
+        __metadata('design:type', Function), 
+        __metadata('design:paramtypes', [KeyboardEvent]), 
+        __metadata('design:returntype', void 0)
+    ], SimpleSynthComponent.prototype, "muteSoundWithKeyboard", null);
+    SimpleSynthComponent = __decorate([
+        core_1.Component({
+            selector: 'simple-synth',
+            templateUrl: 'app/simple-synth.component.html'
+        }), 
+        __metadata('design:paramtypes', [Window])
+    ], SimpleSynthComponent);
+    return SimpleSynthComponent;
+}());
+exports.SimpleSynthComponent = SimpleSynthComponent;
+//# sourceMappingURL=simple-synth.component.js.map

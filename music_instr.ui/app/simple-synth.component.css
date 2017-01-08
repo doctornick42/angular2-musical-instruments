@@ -1,0 +1,220 @@
+﻿div.synth {
+    height: 80vh;
+    width: 80%;
+
+    margin: 0 auto;
+    position: relative;
+
+    overflow: hidden;
+}
+
+div.keyboard {
+    height: 40%;
+    max-height: 100px;
+    
+    width: 95%;
+    margin: auto;
+    
+    bottom: 5px;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+
+    overflow: hidden;
+}
+
+div.keyboard ul {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    
+    position: relative;
+    width: 100%;
+}
+
+div.keyboard ul li.key {
+    list-style: none;
+    border-left: 1px solid #000;
+    border-right-width: 0;
+    display: inline-block;
+    
+    margin-left: -4px;
+}
+
+div.keyboard ul li.key.white {
+    width: 4.65%;
+    height: 100%;
+    
+    z-index: 0;
+}
+
+div.keyboard ul li:first-child {
+    border: none;
+}
+
+div.keyboard ul li:last-child {
+    border-right: none;
+}
+
+div.keyboard ul li.key.black {
+    -ms-transform: translate(-50%, 0); /* IE 9 */
+    -webkit-transform: translate(-50%, 0); /* Safari */
+    transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+
+    width: 2%;
+    height: 70%;
+    background-color: #000;
+    position: absolute;
+    z-index: 1000;
+}
+
+div.keyboard ul li.key.white:active {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.1), 
+      rgba(0, 0, 0, 0.1)
+    );
+}
+
+div.keyboard ul li.key.black:active {
+    border: 1px solid lightgrey;
+}
+
+div.control-panel {
+    width: 45%;
+    height: 40%;
+
+    overflow: hidden;
+}
+
+div.control-panel.sliders-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;   
+}
+
+div.control-panel.settings-panel {
+    position: absolute;
+    top: 10px;
+    left: 10px;   
+}
+
+div.range-block {
+    width: 40%;
+    height: 18%;
+
+    min-height: 25px;
+    min-width: 150px;
+    border: none;
+
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+div.range-block label {
+    top: 10%;
+    position: relative;
+    float: left;
+}
+
+div.panel-title {
+    width: 30%;
+    min-width: 100px;
+
+    margin-bottom: 15px;
+    border: none;
+
+    margin-left: 5px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 60%;
+  /*margin: 13.8px 0;*/
+  margin-left: 5%;
+  margin-top: 2%;
+
+  min-height: 20px;
+  height: inherit;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #898989;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 18px;
+  width: 15%; 
+  border-radius: 3px;
+  background: #ebebeb;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -9px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #898989;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 2px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #898989;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 18px;
+  width: 15%; 
+  border-radius: 3px;
+  background: #ebebeb;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 4.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #898989;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #898989;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  width: 15px;
+  border-radius: 3px;
+  background: #ebebeb;
+  cursor: pointer;
+  height: 16px;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #898989;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #898989;
+}
