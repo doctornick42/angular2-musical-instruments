@@ -17,10 +17,15 @@ export class SimpleSynthComponent {
     canvasCtx: CanvasRenderingContext2D;
 
     volume: number;
+    release: number;
+    attack: number;
+
     frequencies: NoteWithName;
     keyboardNotes: KeyboardNote;
 
     availableWaveForms: Array<string>;
+
+    private pressedFrequencies: Array<number>;
 
     constructor(private window: Window, private renderer: Renderer) {
         this.initFrequencies();
@@ -44,15 +49,34 @@ export class SimpleSynthComponent {
         this.waveAnalyzer.connect(this.audioCtx.destination);
 
         this.volume = 50;
+        this.release = 0;
+        this.attack = 0;
+
+        this.pressedFrequencies = [];
     };
 
     playSound(frequency: number) {
-        this.oscillator.frequency.value = frequency;
-        this.volumeFilter.gain.value = this.volume / 100;
+        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(frequency);
+        if (pressedFrequencyIndex === -1) {
+            this.oscillator.frequency.value = frequency;
+
+            this.volumeFilter.gain.linearRampToValueAtTime(this.volume / 100,
+                this.audioCtx.currentTime + this.attack / 100);
+
+            this.pressedFrequencies.push(frequency);
+        } 
     };
 
-    muteSound() {
-        this.volumeFilter.gain.value = 0;
+    muteSound(frequency: number) {
+        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(frequency);
+        if (pressedFrequencyIndex > -1) {
+            this.pressedFrequencies.splice(pressedFrequencyIndex, 1);
+        } 
+
+        if (this.pressedFrequencies.length === 0) {
+            this.volumeFilter.gain.linearRampToValueAtTime(0,
+                this.audioCtx.currentTime + this.attack / 100 + this.release / 100);
+        }
     };
 
     onWaveFormChange(newValue: string) {
@@ -128,6 +152,9 @@ export class SimpleSynthComponent {
 
     @HostListener('document:keyup', ['$event'])
     muteSoundWithKeyboard(event: KeyboardEvent) {
-        this.muteSound();
+        let currentKey = this.keyboardNotes[event.keyCode];
+        if (currentKey) {
+            this.muteSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
+        }
     };
 }

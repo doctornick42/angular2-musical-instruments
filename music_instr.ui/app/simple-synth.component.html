@@ -24,21 +24,21 @@
             <input [(ngModel)]="volume" type="range" min="0" max="100" />
         </div>
         <div class="range-block">
-            <label>label: </label>
-            <input type="range" min="0" max="100" />
+            <label>release: </label>
+            <input [(ngModel)]="release" type="range" min="0" max="100" />
         </div>
         <div class="range-block">
-            <label>label: </label>
-            <input type="range" min="0" max="100" />
+            <label>attack: </label>
+            <input [(ngModel)]="attack" type="range" min="0" max="100" />
         </div>
     </div>
 
     <div class="keyboard">
         <ul>
-            <li class="key white" (mousedown)="playSound(frequencies['C0'])" (mouseup)="muteSound()"></li>
-            <li class="key black" (mousedown)="playSound(frequencies['C#0'])" (mouseup)="muteSound()"></li>
-            <li class="key white" (mousedown)="playSound(frequencies['D0'])" (mouseup)="muteSound()"></li>
-            <li class="key black" (mousedown)="playSound(frequencies['D#0'])" (mouseup)="muteSound()"></li>
+            <li class="key white" (mousedown)="playSound(frequencies['C0'])" (mouseup)="muteSound(frequencies['C0'])"></li>
+            <li class="key black" (mousedown)="playSound(frequencies['C#0'])" (mouseup)="muteSound(frequencies['C#0'])"></li>
+            <li class="key white" (mousedown)="playSound(frequencies['D0'])" (mouseup)="muteSound(frequencies['D0'])"></li>
+            <li class="key black" (mousedown)="playSound(frequencies['D#0'])" (mouseup)="muteSound(frequencies['D#0'])"></li>
             <li class="key white" (mousedown)="playSound(frequencies['E0'])" (mouseup)="muteSound()"></li>
             <li class="key white" (mousedown)="playSound(frequencies['F0'])" (mouseup)="muteSound()"></li>
             <li class="key black" (mousedown)="playSound(frequencies['F#0'])" (mouseup)="muteSound()"></li>
