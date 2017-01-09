@@ -1,8 +1,10 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
 
 import { AppComponent }  from './app.component';
 import { SimpleSynthComponent } from './simple-synth.component';
+import { WaveVisualizerComponent } from './wave-visualizer.component';
 
 import { ValueProvider } from '@angular/core';
 
@@ -13,11 +15,13 @@ const WINDOW_PROVIDER: ValueProvider = {
 
 @NgModule({
     imports: [
-        BrowserModule
+        BrowserModule,
+        FormsModule
     ],
     declarations: [
         AppComponent,
-        SimpleSynthComponent
+        SimpleSynthComponent,
+        WaveVisualizerComponent
     ],
     bootstrap: [AppComponent],
     providers: [

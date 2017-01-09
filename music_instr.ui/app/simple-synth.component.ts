@@ -1,48 +1,62 @@
-import { Component, HostListener, Renderer, ViewChild } from '@angular/core';
+import { Component, HostListener, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { NoteWithName } from './noteWithName';
 import { KeyboardNote } from './keyboardNote';
 
 @Component({
     selector: 'simple-synth',
     templateUrl: 'app/simple-synth.component.html',
-    styleUrls: [ 'app/simple-synth.component.css' ]
+    styleUrls: ['app/simple-synth.component.css']
 })
 export class SimpleSynthComponent {
 
-    audioCtx: any;
-    oscillator: any;
-    volumeFilter: any;
+    audioCtx: AudioContext;
+    oscillator: OscillatorNode;
+    volumeFilter: GainNode;
+    waveAnalyzer: AnalyserNode;
+
+    canvasCtx: CanvasRenderingContext2D;
 
     volume: number;
     frequencies: NoteWithName;
     keyboardNotes: KeyboardNote;
 
+    availableWaveForms: Array<string>;
+
     constructor(private window: Window, private renderer: Renderer) {
         this.initFrequencies();
         this.initKeyboardBinding();
 
+        this.availableWaveForms = ['sine', 'square', 'sawtooth', 'triangle'];
+
         this.audioCtx = new AudioContext(); //(window.AudioContext || window.webkitAudioContext)();
         this.oscillator = this.audioCtx.createOscillator();
-        this.oscillator.type = this.oscillator.SINE;
+        this.oscillator.type = this.availableWaveForms[0];
         this.oscillator.frequency.value = this.frequencies["C0"]; // value in hertz
         this.oscillator.start(0);
 
         this.volumeFilter = this.audioCtx.createGain();
         this.volumeFilter.gain.value = 0;
 
-        this.oscillator.connect(this.volumeFilter);
-        this.volumeFilter.connect(this.audioCtx.destination);
+        this.waveAnalyzer = this.audioCtx.createAnalyser();
 
-        this.volume = 0.5;
+        this.oscillator.connect(this.volumeFilter);
+        this.volumeFilter.connect(this.waveAnalyzer);
+        this.waveAnalyzer.connect(this.audioCtx.destination);
+
+        this.volume = 50;
     };
 
     playSound(frequency: number) {
         this.oscillator.frequency.value = frequency;
-        this.volumeFilter.gain.value = this.volume;
+        this.volumeFilter.gain.value = this.volume / 100;
     };
 
     muteSound() {
         this.volumeFilter.gain.value = 0;
+    };
+
+    onWaveFormChange(newValue: string) {
+        this.oscillator.type = newValue;
     };
 
     private initFrequencies() {
@@ -106,7 +120,6 @@ export class SimpleSynthComponent {
 
     @HostListener('document:keydown', ['$event'])
     playSoundWithKeyboard(event: KeyboardEvent) {
-        console.log(event.keyCode);
         let currentKey = this.keyboardNotes[event.keyCode];
         if (currentKey) {
             this.playSound(this.frequencies[this.keyboardNotes[event.keyCode]]);

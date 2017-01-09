@@ -1,26 +1,38 @@
 ﻿<div class="synth">
     <div class="control-panel settings-panel">
         <div class="panel-title">
-            <label>Settings pannel</label>
+            <label>settings pannel</label>
+        </div>
+
+        <div class="control-panel-block">
+            <label>wave form:</label>
+            <select [ngModel]="oscillator.type" (ngModelChange)="onWaveFormChange($event)" name="sel2">
+                <option [value]="i" *ngFor="let i of availableWaveForms">{{i}}</option>
+            </select>
+        </div>
+
+        <div class="control-panel-block wave-visualizer-container">
+            <wave-visualizer [waveAnalyser]="waveAnalyzer"></wave-visualizer>
         </div>
     </div>
     <div class="control-panel sliders-panel">
         <div class="panel-title">
-            <label>Sliders pannel</label>
+            <label>sliders pannel</label>
         </div>
         <div class="range-block">
-            <label>Label: </label>
-            <input type="range" min="0" max="50" />
+            <label>level: </label>
+            <input [(ngModel)]="volume" type="range" min="0" max="100" />
         </div>
         <div class="range-block">
-            <label>Label: </label>
-            <input type="range" min="0" max="50" />
+            <label>label: </label>
+            <input type="range" min="0" max="100" />
         </div>
         <div class="range-block">
-            <label>Label: </label>
-            <input type="range" min="0" max="50" />
+            <label>label: </label>
+            <input type="range" min="0" max="100" />
         </div>
     </div>
+
     <div class="keyboard">
         <ul>
             <li class="key white" (mousedown)="playSound(frequencies['C0'])" (mouseup)="muteSound()"></li>

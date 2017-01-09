@@ -218,3 +218,23 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #898989;
 }
+
+div.control-panel-block {
+    margin-left: 10px;
+    margin-top: 2px;
+
+    border: none;
+}
+
+div.wave-visualizer-container {
+    display: block;
+
+    width: 30%;
+    height: 25%;
+
+    min-height: 40px;
+    min-width: 120px;
+    border: 1px solid #000;
+
+    margin-top: 7px;
+}
