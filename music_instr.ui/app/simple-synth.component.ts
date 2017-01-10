@@ -64,14 +64,14 @@ export class SimpleSynthComponent {
                 this.audioCtx.currentTime + this.attack / 100);
 
             this.pressedFrequencies.push(frequency);
-        } 
+        }
     };
 
     muteSound(frequency: number) {
         let pressedFrequencyIndex = this.pressedFrequencies.indexOf(frequency);
         if (pressedFrequencyIndex > -1) {
             this.pressedFrequencies.splice(pressedFrequencyIndex, 1);
-        } 
+        }
 
         if (this.pressedFrequencies.length === 0) {
             this.volumeFilter.gain.linearRampToValueAtTime(0,
@@ -140,6 +140,14 @@ export class SimpleSynthComponent {
         this.keyboardNotes[72] = 'A0';
         this.keyboardNotes[85] = 'A#0';
         this.keyboardNotes[74] = 'H0';
+
+        this.keyboardNotes[75] = 'C1';
+        this.keyboardNotes[79] = 'C#1';
+        this.keyboardNotes[76] = 'D1';
+        this.keyboardNotes[80] = 'D#1';
+        this.keyboardNotes[186] = 'E1';
+        this.keyboardNotes[222] = 'F1';
+        this.keyboardNotes[221] = 'F#1';
     };
 
     @HostListener('document:keydown', ['$event'])
