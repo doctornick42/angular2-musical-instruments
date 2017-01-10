@@ -71,14 +71,14 @@ div.keyboard ul li.key.black {
     z-index: 1000;
 }
 
-div.keyboard ul li.key.white:active {
+div.keyboard ul li.key.white.pressed {
     background: linear-gradient(
       rgba(0, 0, 0, 0.1), 
       rgba(0, 0, 0, 0.1)
     );
 }
 
-div.keyboard ul li.key.black:active {
+div.keyboard ul li.key.black.pressed {
     border: 1px solid lightgrey;
 }
 
@@ -102,11 +102,11 @@ div.control-panel.settings-panel {
 }
 
 div.range-block {
-    width: 40%;
+    width: 50%;
     height: 18%;
 
     min-height: 25px;
-    min-width: 150px;
+    min-width: 200px;
     border: none;
 
     margin-left: 10px;

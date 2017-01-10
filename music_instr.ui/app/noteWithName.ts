@@ -1,3 +1,5 @@
+import { Note } from './note';
+
 export interface NoteWithName {
-    [name: string]: number;
+    [name: string]: Note;
 }

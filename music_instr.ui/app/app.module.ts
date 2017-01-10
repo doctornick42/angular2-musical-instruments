@@ -8,6 +8,8 @@ import { WaveVisualizerComponent } from './wave-visualizer.component';
 
 import { ValueProvider } from '@angular/core';
 
+import { KeysPipe } from './keysPipe';
+
 const WINDOW_PROVIDER: ValueProvider = {
     provide: Window,
     useValue: window
@@ -21,7 +23,8 @@ const WINDOW_PROVIDER: ValueProvider = {
     declarations: [
         AppComponent,
         SimpleSynthComponent,
-        WaveVisualizerComponent
+        WaveVisualizerComponent,
+        KeysPipe
     ],
     bootstrap: [AppComponent],
     providers: [

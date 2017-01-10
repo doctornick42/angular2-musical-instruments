@@ -49,7 +49,7 @@ export class WaveVisualizerComponent {
 
         canvasContext.beginPath();
 
-        var sliceWidth = this._width * 1.0 / bufferLength;
+        var sliceWidth = this._width / bufferLength;
         var x = 0;
 
         for (var i = 0; i < bufferLength; i++) {

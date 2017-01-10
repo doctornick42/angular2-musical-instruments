@@ -1,6 +1,7 @@
 import { Component, HostListener, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { NoteWithName } from './noteWithName';
 import { KeyboardNote } from './keyboardNote';
+import { Note } from './note';
 
 @Component({
     selector: 'simple-synth',
@@ -25,7 +26,7 @@ export class SimpleSynthComponent {
 
     availableWaveForms: Array<string>;
 
-    private pressedFrequencies: Array<number>;
+    pressedFrequencies: Array<number>;
 
     constructor(private window: Window, private renderer: Renderer) {
         this.initFrequencies();
@@ -36,7 +37,7 @@ export class SimpleSynthComponent {
         this.audioCtx = new AudioContext(); //(window.AudioContext || window.webkitAudioContext)();
         this.oscillator = this.audioCtx.createOscillator();
         this.oscillator.type = this.availableWaveForms[0];
-        this.oscillator.frequency.value = this.frequencies["C0"]; // value in hertz
+        this.oscillator.frequency.value = this.frequencies["C0"].frequency; // value in hertz
         this.oscillator.start(0);
 
         this.volumeFilter = this.audioCtx.createGain();
@@ -55,20 +56,20 @@ export class SimpleSynthComponent {
         this.pressedFrequencies = [];
     };
 
-    playSound(frequency: number) {
-        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(frequency);
+    playSound(note: Note) {
+        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(note.frequency);
         if (pressedFrequencyIndex === -1) {
-            this.oscillator.frequency.value = frequency;
+            this.oscillator.frequency.value = note.frequency;
 
             this.volumeFilter.gain.linearRampToValueAtTime(this.volume / 100,
                 this.audioCtx.currentTime + this.attack / 100);
 
-            this.pressedFrequencies.push(frequency);
+            this.pressedFrequencies.push(note.frequency);
         }
     };
 
-    muteSound(frequency: number) {
-        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(frequency);
+    muteSound(note: Note) {
+        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(note.frequency);
         if (pressedFrequencyIndex > -1) {
             this.pressedFrequencies.splice(pressedFrequencyIndex, 1);
         }
@@ -76,6 +77,8 @@ export class SimpleSynthComponent {
         if (this.pressedFrequencies.length === 0) {
             this.volumeFilter.gain.linearRampToValueAtTime(0,
                 this.audioCtx.currentTime + this.attack / 100 + this.release / 100);
+        } else {
+            this.oscillator.frequency.value = this.pressedFrequencies[this.pressedFrequencies.length - 1];
         }
     };
 
@@ -86,44 +89,48 @@ export class SimpleSynthComponent {
     private initFrequencies() {
         this.frequencies = {};
 
-        this.frequencies["C0"] = 261.626;
-        this.frequencies["C#0"] = 277.183;
-        this.frequencies["D0"] = 293.665;
-        this.frequencies["D#0"] = 311.127;
-        this.frequencies["E0"] = 329.628;
-        this.frequencies["F0"] = 349.228;
-        this.frequencies["F#0"] = 369.994;
-        this.frequencies["G0"] = 391.995;
-        this.frequencies["G#0"] = 415.305;
-        this.frequencies["A0"] = 440;
-        this.frequencies["A#0"] = 466.164;
-        this.frequencies["H0"] = 493.883;
+        this.frequencies["C0"] = new Note(261.626);
+        this.frequencies["C#0"] = new Note(277.183);
+        this.frequencies["D0"] = new Note(293.665);
+        this.frequencies["D#0"] = new Note(311.127);
+        this.frequencies["E0"] = new Note(329.628);
+        this.frequencies["F0"] = new Note(349.228);
+        this.frequencies["F#0"] = new Note(369.994);
+        this.frequencies["G0"] = new Note(391.995);
+        this.frequencies["G#0"] = new Note(415.305);
+        this.frequencies["A0"] = new Note(440);
+        this.frequencies["A#0"] = new Note(466.164);
+        this.frequencies["H0"] = new Note(493.883);
 
-        this.frequencies["C1"] = 2 * this.frequencies["C0"];
-        this.frequencies["C#1"] = 2 * this.frequencies["C#0"];
-        this.frequencies["D1"] = 2 * this.frequencies["D0"];
-        this.frequencies["D#1"] = 2 * this.frequencies["D#0"];
-        this.frequencies["E1"] = 2 * this.frequencies["E0"];
-        this.frequencies["F1"] = 2 * this.frequencies["F0"];
-        this.frequencies["F#1"] = 2 * this.frequencies["F#0"];
-        this.frequencies["G1"] = 2 * this.frequencies["G0"];
-        this.frequencies["G#1"] = 2 * this.frequencies["G#0"];
-        this.frequencies["A1"] = 2 * this.frequencies["A0"];
-        this.frequencies["A#1"] = 2 * this.frequencies["A#0"];
-        this.frequencies["H1"] = 2 * this.frequencies["H0"];
+        this.frequencies["C1"] = new Note(2 * this.frequencies["C0"].frequency);
+        this.frequencies["C#1"] = new Note(2 * this.frequencies["C#0"].frequency);
+        this.frequencies["D1"] = new Note(2 * this.frequencies["D0"].frequency);
+        this.frequencies["D#1"] = new Note(2 * this.frequencies["D#0"].frequency);
+        this.frequencies["E1"] = new Note(2 * this.frequencies["E0"].frequency);
+        this.frequencies["F1"] = new Note(2 * this.frequencies["F0"].frequency);
+        this.frequencies["F#1"] = new Note(2 * this.frequencies["F#0"].frequency);
+        this.frequencies["G1"] = new Note(2 * this.frequencies["G0"].frequency);
+        this.frequencies["G#1"] = new Note(2 * this.frequencies["G#0"].frequency);
+        this.frequencies["A1"] = new Note(2 * this.frequencies["A0"].frequency);
+        this.frequencies["A#1"] = new Note(2 * this.frequencies["A#0"].frequency);
+        this.frequencies["H1"] = new Note(2 * this.frequencies["H0"].frequency);
 
-        this.frequencies["C2"] = 2 * this.frequencies["C1"];
-        this.frequencies["C#2"] = 2 * this.frequencies["C#1"];
-        this.frequencies["D2"] = 2 * this.frequencies["D1"];
-        this.frequencies["D#2"] = 2 * this.frequencies["D#1"];
-        this.frequencies["E2"] = 2 * this.frequencies["E1"];
-        this.frequencies["F2"] = 2 * this.frequencies["F1"];
-        this.frequencies["F#2"] = 2 * this.frequencies["F#1"];
-        this.frequencies["G2"] = 2 * this.frequencies["G1"];
-        this.frequencies["G#2"] = 2 * this.frequencies["G#1"];
-        this.frequencies["A2"] = 2 * this.frequencies["A1"];
-        this.frequencies["A#2"] = 2 * this.frequencies["A#1"];
-        this.frequencies["H2"] = 2 * this.frequencies["H1"];
+        this.frequencies["C2"] = new Note(2 * this.frequencies["C1"].frequency);
+        this.frequencies["C#2"] = new Note(2 * this.frequencies["C#1"].frequency);
+        this.frequencies["D2"] = new Note(2 * this.frequencies["D1"].frequency);
+        this.frequencies["D#2"] = new Note(2 * this.frequencies["D#1"].frequency);
+        this.frequencies["E2"] = new Note(2 * this.frequencies["E1"].frequency);
+        this.frequencies["F2"] = new Note(2 * this.frequencies["F1"].frequency);
+        this.frequencies["F#2"] = new Note(2 * this.frequencies["F#1"].frequency);
+        this.frequencies["G2"] = new Note(2 * this.frequencies["G1"].frequency);
+        this.frequencies["G#2"] = new Note(2 * this.frequencies["G#1"].frequency);
+        this.frequencies["A2"] = new Note(2 * this.frequencies["A1"].frequency);
+        this.frequencies["A#2"] = new Note(2 * this.frequencies["A#1"].frequency);
+        this.frequencies["H2"] = new Note(2 * this.frequencies["H1"].frequency);
+
+        for (let key in this.frequencies) {
+            this.frequencies[key].isBlackPianoKey = key.indexOf('#') > -1;
+        }
     };
 
     private initKeyboardBinding() {
@@ -164,5 +171,10 @@ export class SimpleSynthComponent {
         if (currentKey) {
             this.muteSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
         }
+    };
+
+    isKeyPressed(noteKey: string): boolean {
+        let pressedFrequencyIndex = this.pressedFrequencies.indexOf(this.frequencies[noteKey].frequency);
+        return pressedFrequencyIndex != -1;
     };
 }
