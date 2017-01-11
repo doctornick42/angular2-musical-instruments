@@ -1,10 +1,14 @@
-﻿label {
+﻿div {
+    
+}
+
+label {
     font-weight: normal;
 }
 
 div.synth {
     height: 50vh;
-    width: 80%;
+    width: 100%;
 
     min-height: 300px;
 
@@ -27,6 +31,8 @@ div.keyboard {
     position: absolute;
 
     overflow: hidden;
+
+    border: 1px solid #000
 }
 
 div.keyboard ul {
@@ -95,18 +101,20 @@ div.control-panel {
     overflow: hidden;
 
     min-height: 150px;
+
+    border: 1px solid #000
 }
 
 div.control-panel.sliders-panel {
     position: absolute;
     top: 10px;
-    right: 10px;   
+    right: 19px;   
 }
 
 div.control-panel.settings-panel {
     position: absolute;
     top: 10px;
-    left: 10px;   
+    left: 19px;   
 }
 
 div.range-block {

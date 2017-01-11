@@ -10,7 +10,7 @@ import { ValueProvider } from '@angular/core';
 
 import { KeysPipe } from './keysPipe';
 
-import { AlertModule } from 'ng2-bootstrap';
+import { AlertModule, TabsModule } from 'ng2-bootstrap';
 
 const WINDOW_PROVIDER: ValueProvider = {
     provide: Window,
@@ -20,6 +20,7 @@ const WINDOW_PROVIDER: ValueProvider = {
 @NgModule({
     imports: [
         AlertModule.forRoot(),
+        TabsModule.forRoot(),
         BrowserModule,
         FormsModule
     ],
