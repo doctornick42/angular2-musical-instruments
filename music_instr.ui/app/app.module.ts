@@ -5,6 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { AppComponent }  from './app.component';
 import { SimpleSynthComponent } from './simple-synth.component';
 import { WaveVisualizerComponent } from './wave-visualizer.component';
+import { PolyphonicSynthComponent } from './polyphonic-synth.component';
 
 import { ValueProvider } from '@angular/core';
 
@@ -28,6 +29,7 @@ const WINDOW_PROVIDER: ValueProvider = {
         AppComponent,
         SimpleSynthComponent,
         WaveVisualizerComponent,
+        PolyphonicSynthComponent,
         KeysPipe
     ],
     bootstrap: [AppComponent],
