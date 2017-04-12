@@ -1,4 +1,5 @@
 ﻿import { Component, HostListener, Renderer, ViewChild, ElementRef } from '@angular/core';
+import { RouterModule, Route }  from '@angular/router';
 import { NoteWithName } from './noteWithName';
 import { KeyboardNote } from './keyboardNote';
 import { Note } from './note';
@@ -31,7 +32,7 @@ export class PolyphonicSynthComponent {
 
     pressedFrequencies: Array<number>;
 
-    constructor(private window: Window, private renderer: Renderer) {
+    constructor(private window: Window, private renderer: Renderer, private elementRef: ElementRef) {
         this.initFrequencies();
         this.initKeyboardBinding();
 
@@ -40,23 +41,12 @@ export class PolyphonicSynthComponent {
         this.audioCtx = new AudioContext(); //(window.AudioContext || window.webkitAudioContext)();
         this.oscillators = {};
 
-        //this.oscillator = this.audioCtx.createOscillator();
-        //this.oscillator.type = this.availableWaveForms[0];
-        //this.oscillator.frequency.value = this.frequencies["C0"].frequency; // value in hertz
-        //this.oscillator.start(0);
-
-        //this.volumeFilter = this.audioCtx.createGain();
-        //this.volumeFilter.gain.value = 0;
-
         this.waveAnalyzer = this.audioCtx.createAnalyser();
-
-        //this.oscillator.connect(this.volumeFilter);
-        //this.volumeFilter.connect(this.waveAnalyzer);
         this.waveAnalyzer.connect(this.audioCtx.destination);
 
         this.volume = 50;
         this.release = 0;
-        this.attack = 0;
+        this.attack = 7;
 
         this.pressedFrequencies = [];
         this.currentWaveForm = this.availableWaveForms[0];
@@ -66,12 +56,14 @@ export class PolyphonicSynthComponent {
         if (!this.oscillators[noteKey]) {
             let newVoice: Voice = new Voice(this.audioCtx, this.frequencies[noteKey].frequency, this.currentWaveForm);
             newVoice.gainNode.connect(this.waveAnalyzer);
+            //this.waveAnalyzer.connect(this.audioCtx.destination);
 
             newVoice.gainNode.gain.linearRampToValueAtTime(this.volume / 100,
                 this.audioCtx.currentTime + this.attack / 100);
 
             this.oscillators[noteKey] = newVoice;
         } else {
+            this.oscillators[noteKey].oscillatorNode.type = this.currentWaveForm;
             this.oscillators[noteKey].gainNode.gain.linearRampToValueAtTime(this.volume / 100,
                 this.audioCtx.currentTime + this.attack / 100);
         }
@@ -93,13 +85,6 @@ export class PolyphonicSynthComponent {
         if (pressedFrequencyIndex > -1) {
             this.pressedFrequencies.splice(pressedFrequencyIndex, 1);
         }
-
-        //if (this.pressedFrequencies.length === 0) {
-        //    this.volumeFilter.gain.linearRampToValueAtTime(0,
-        //        this.audioCtx.currentTime + this.attack / 100 + this.release / 100);
-        //} else {
-        //    this.oscillator.frequency.value = this.pressedFrequencies[this.pressedFrequencies.length - 1];
-        //}
     };
 
     onWaveFormChange(newValue: string) {
@@ -177,24 +162,35 @@ export class PolyphonicSynthComponent {
         this.keyboardNotes[221] = 'F#1';
     };
 
-    //@HostListener('document:keydown', ['$event'])
-    //playSoundWithKeyboard(event: KeyboardEvent) {
-    //    let currentKey = this.keyboardNotes[event.keyCode];
-    //    if (currentKey) {
-    //        this.playSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
-    //    }
-    //};
+    @HostListener('document:keydown', ['$event'])
+    playSoundWithKeyboard(event: KeyboardEvent) {
+        if (this.elementRef.nativeElement.offsetParent == null) {
+            return;
+        }
 
-    //@HostListener('document:keyup', ['$event'])
-    //muteSoundWithKeyboard(event: KeyboardEvent) {
-    //    let currentKey = this.keyboardNotes[event.keyCode];
-    //    if (currentKey) {
-    //        this.muteSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
-    //    }
-    //};
+        let currentKey = this.keyboardNotes[event.keyCode];
+        if (currentKey) {
+            //this.playSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
+            this.playSound(this.keyboardNotes[event.keyCode]);
+        }
+    };
+
+    @HostListener('document:keyup', ['$event'])
+    muteSoundWithKeyboard(event: KeyboardEvent) {
+        if (this.elementRef.nativeElement.offsetParent == null) {
+            return;
+        }
+
+        let currentKey = this.keyboardNotes[event.keyCode];
+        if (currentKey) {
+            //this.muteSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
+            this.muteSound(this.keyboardNotes[event.keyCode]);
+        }
+    };
 
     isKeyPressed(noteKey: string): boolean {
         let pressedFrequencyIndex = this.pressedFrequencies.indexOf(this.frequencies[noteKey].frequency);
         return pressedFrequencyIndex != -1;
     };
 }
+export const PolyphonicSynthComponentRoutes: Route[] = [{ path: 'polyphonic-synth', component: PolyphonicSynthComponent }];

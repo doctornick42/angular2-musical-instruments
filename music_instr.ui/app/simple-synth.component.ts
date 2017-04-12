@@ -1,4 +1,5 @@
 import { Component, HostListener, Renderer, ViewChild, ElementRef } from '@angular/core';
+import { RouterModule, Route }  from '@angular/router';
 import { NoteWithName } from './noteWithName';
 import { KeyboardNote } from './keyboardNote';
 import { Note } from './note';
@@ -28,7 +29,7 @@ export class SimpleSynthComponent {
 
     pressedFrequencies: Array<number>;
 
-    constructor(private window: Window, private renderer: Renderer) {
+    constructor(private window: Window, private renderer: Renderer, private elementRef: ElementRef) {
         this.initFrequencies();
         this.initKeyboardBinding();
 
@@ -51,7 +52,7 @@ export class SimpleSynthComponent {
 
         this.volume = 50;
         this.release = 0;
-        this.attack = 0;
+        this.attack = 7;
 
         this.pressedFrequencies = [];
     };
@@ -159,6 +160,10 @@ export class SimpleSynthComponent {
 
     @HostListener('document:keydown', ['$event'])
     playSoundWithKeyboard(event: KeyboardEvent) {
+        if (this.elementRef.nativeElement.offsetParent == null) {
+            return;
+        }
+
         let currentKey = this.keyboardNotes[event.keyCode];
         if (currentKey) {
             this.playSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
@@ -167,6 +172,10 @@ export class SimpleSynthComponent {
 
     @HostListener('document:keyup', ['$event'])
     muteSoundWithKeyboard(event: KeyboardEvent) {
+        if (this.elementRef.nativeElement.offsetParent == null) {
+            return;
+        }
+
         let currentKey = this.keyboardNotes[event.keyCode];
         if (currentKey) {
             this.muteSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
@@ -178,3 +187,4 @@ export class SimpleSynthComponent {
         return pressedFrequencyIndex != -1;
     };
 }
+export const SimpleSynthComponentRoutes: Route[] = [{ path: 'simple-synth', component: SimpleSynthComponent }];

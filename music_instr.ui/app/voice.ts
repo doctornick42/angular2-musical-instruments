@@ -13,8 +13,6 @@
         this.gainNode = audioContext.createGain();
         this.gainNode.gain.value = 0;
 
-        //this.waveAnalyzer = this.audioCtx.createAnalyser();
-
         this.oscillatorNode.connect(this.gainNode);
     }
 }

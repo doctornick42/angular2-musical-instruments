@@ -6,9 +6,9 @@
 
         <div class="control-panel-block">
             <label>wave form:</label>
-            <!--<select [ngModel]="oscillator.type" (ngModelChange)="onWaveFormChange($event)" name="sel2">
+            <select [ngModel]="currentWaveForm" (ngModelChange)="onWaveFormChange($event)" name="sel2">
                 <option [value]="i" *ngFor="let i of availableWaveForms">{{i}}</option>
-            </select>-->
+            </select>
         </div>
 
         <div class="control-panel-block wave-visualizer-container">

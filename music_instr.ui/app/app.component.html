@@ -9,7 +9,8 @@
         Right now there's only one instrument here: a simple monophonic synthesizer with a regular piano keyboard.
     </p>
 
-    <tabset>
+    <!--navigation tabs withou actual routing-->
+    <!--<tabset>
         <tab heading="Simple synth">
             <div class="synth-container">
                 <simple-synth>Loading simple synth...</simple-synth>
@@ -20,5 +21,13 @@
                 <polyphonic-synth>Loading polyphonic synth...</polyphonic-synth>
             </div>
         </tab>
-    </tabset>
+    </tabset>-->
+
+    <!--simple bad looking routing-->
+    <nav>
+        <a [routerLink]="['/simple-synth']">Simple synth</a>
+        <a [routerLink]="['/polyphonic-synth']">Polyphonic synth</a>
+    </nav>
+
+    <router-outlet></router-outlet>
 </div>

@@ -13,6 +13,10 @@ import { KeysPipe } from './keysPipe';
 
 import { AlertModule, TabsModule } from 'ng2-bootstrap';
 
+import { RouterModule, Routes } from '@angular/router';
+
+import { routing } from './routes';
+
 const WINDOW_PROVIDER: ValueProvider = {
     provide: Window,
     useValue: window
@@ -23,7 +27,9 @@ const WINDOW_PROVIDER: ValueProvider = {
         AlertModule.forRoot(),
         TabsModule.forRoot(),
         BrowserModule,
-        FormsModule
+        FormsModule,
+        RouterModule,
+        routing
     ],
     declarations: [
         AppComponent,
