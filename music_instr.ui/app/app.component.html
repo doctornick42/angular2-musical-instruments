@@ -9,25 +9,16 @@
         Right now there's only one instrument here: a simple monophonic synthesizer with a regular piano keyboard.
     </p>
 
-    <!--navigation tabs withou actual routing-->
-    <!--<tabset>
-        <tab heading="Simple synth">
-            <div class="synth-container">
-                <simple-synth>Loading simple synth...</simple-synth>
-            </div>
-        </tab>
-        <tab heading="Polyphonic synth">
-            <div class="synth-container">
-                <polyphonic-synth>Loading polyphonic synth...</polyphonic-synth>
-            </div>
-        </tab>
-    </tabset>-->
-
-    <!--simple bad looking routing-->
-    <nav>
-        <a [routerLink]="['/simple-synth']">Simple synth</a>
-        <a [routerLink]="['/polyphonic-synth']">Polyphonic synth</a>
-    </nav>
+    <div>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" [class.active]="activeTab == 'simple-synth'">
+                <a role="tab" data-toggle="tab" [routerLink]="['/simple-synth']" (click)="setActiveTab('simple-synth')">Simple synth</a>
+            </li>
+            <li role="presentation" [class.active]="activeTab == 'polyphonic-synth'">
+                <a role="tab" data-toggle="tab" [routerLink]="['/polyphonic-synth']" (click)="setActiveTab('polyphonic-synth')">Polyphonic synth</a>
+            </li>
+        </ul>
+    </div>
 
     <router-outlet></router-outlet>
 </div>

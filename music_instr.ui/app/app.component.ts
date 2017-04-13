@@ -6,4 +6,16 @@ import { routing } from './routes';
     templateUrl: 'app/app.component.html',
     styleUrls: [ 'app/app.component.css' ]
 })
-export class AppComponent { name = 'Angular'; }
+export class AppComponent {
+    name = 'Angular';
+
+    activeTab: string;
+
+    constructor() {
+        this.activeTab = 'simple-synth';
+    }
+
+    setActiveTab(tabName: string): void {
+        this.activeTab = tabName;
+    }
+}

@@ -5,6 +5,7 @@ import { KeyboardNote } from './keyboardNote';
 import { Note } from './note';
 import { VoiceWithKey } from './voiceWithKey';
 import { Voice } from './voice';
+import { AudioContextProvider } from './audioContextProvider';
 
 @Component({
     selector: 'polyphonic-synth',
@@ -32,13 +33,15 @@ export class PolyphonicSynthComponent {
 
     pressedFrequencies: Array<number>;
 
-    constructor(private window: Window, private renderer: Renderer, private elementRef: ElementRef) {
+    constructor(private window: Window, private renderer: Renderer,
+        private elementRef: ElementRef, private audioContextProvider: AudioContextProvider) {
+
         this.initFrequencies();
         this.initKeyboardBinding();
 
         this.availableWaveForms = ['sine', 'square', 'sawtooth', 'triangle'];
 
-        this.audioCtx = new AudioContext(); //(window.AudioContext || window.webkitAudioContext)();
+        this.audioCtx = audioContextProvider.getAudioContext();
         this.oscillators = {};
 
         this.waveAnalyzer = this.audioCtx.createAnalyser();
@@ -56,7 +59,6 @@ export class PolyphonicSynthComponent {
         if (!this.oscillators[noteKey]) {
             let newVoice: Voice = new Voice(this.audioCtx, this.frequencies[noteKey].frequency, this.currentWaveForm);
             newVoice.gainNode.connect(this.waveAnalyzer);
-            //this.waveAnalyzer.connect(this.audioCtx.destination);
 
             newVoice.gainNode.gain.linearRampToValueAtTime(this.volume / 100,
                 this.audioCtx.currentTime + this.attack / 100);
@@ -170,7 +172,6 @@ export class PolyphonicSynthComponent {
 
         let currentKey = this.keyboardNotes[event.keyCode];
         if (currentKey) {
-            //this.playSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
             this.playSound(this.keyboardNotes[event.keyCode]);
         }
     };
@@ -183,7 +184,6 @@ export class PolyphonicSynthComponent {
 
         let currentKey = this.keyboardNotes[event.keyCode];
         if (currentKey) {
-            //this.muteSound(this.frequencies[this.keyboardNotes[event.keyCode]]);
             this.muteSound(this.keyboardNotes[event.keyCode]);
         }
     };

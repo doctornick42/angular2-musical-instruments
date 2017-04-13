@@ -3,6 +3,7 @@ import { RouterModule, Route }  from '@angular/router';
 import { NoteWithName } from './noteWithName';
 import { KeyboardNote } from './keyboardNote';
 import { Note } from './note';
+import { AudioContextProvider } from './audioContextProvider';
 
 @Component({
     selector: 'simple-synth',
@@ -29,13 +30,15 @@ export class SimpleSynthComponent {
 
     pressedFrequencies: Array<number>;
 
-    constructor(private window: Window, private renderer: Renderer, private elementRef: ElementRef) {
+    constructor(private window: Window, private renderer: Renderer,
+        private elementRef: ElementRef, private audioContextProvider: AudioContextProvider) {
+
         this.initFrequencies();
         this.initKeyboardBinding();
 
         this.availableWaveForms = ['sine', 'square', 'sawtooth', 'triangle'];
 
-        this.audioCtx = new AudioContext(); //(window.AudioContext || window.webkitAudioContext)();
+        this.audioCtx = audioContextProvider.getAudioContext();
         this.oscillator = this.audioCtx.createOscillator();
         this.oscillator.type = this.availableWaveForms[0];
         this.oscillator.frequency.value = this.frequencies["C0"].frequency; // value in hertz

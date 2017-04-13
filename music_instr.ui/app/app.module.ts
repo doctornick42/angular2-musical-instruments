@@ -17,6 +17,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { routing } from './routes';
 
+import { AudioContextProvider } from './audioContextProvider';
+
 const WINDOW_PROVIDER: ValueProvider = {
     provide: Window,
     useValue: window
@@ -40,7 +42,8 @@ const WINDOW_PROVIDER: ValueProvider = {
     ],
     bootstrap: [AppComponent],
     providers: [
-        WINDOW_PROVIDER
+        WINDOW_PROVIDER,
+        AudioContextProvider
     ]
 })
 export class AppModule { }
