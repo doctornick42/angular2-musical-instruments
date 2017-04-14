@@ -6,14 +6,14 @@ import { AlertModule, TabsModule } from 'ng2-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent }  from './app.component';
-import { SimpleSynthComponent } from './simple-synth.component';
-import { WaveVisualizerComponent } from './wave-visualizer.component';
-import { PolyphonicSynthComponent } from './polyphonic-synth.component';
-import { KeysPipe } from './keysPipe';
+import { SimpleSynthComponent } from './simple-synth/simple-synth.component';
+import { WaveVisualizerComponent } from './shared/wave-visualizer.component';
+import { PolyphonicSynthComponent } from './polyphonic-synth/polyphonic-synth.component';
+import { KeysPipe } from './shared/keysPipe.pipe';
 import { routing } from './routes';
-import { AudioContextProvider } from './audioContextProvider';
-import { NotesFrequenciesBinder } from './notesFrequenciesBinder';
-import { PianoKeysKeyboardBinder } from './pianoKeysKeyboardBinder';
+import { AudioContextProvider } from './shared/audioContext.provider';
+import { NotesFrequenciesBinder } from './shared/notesFrequenciesBinder.service';
+import { PianoKeysKeyboardBinder } from './shared/pianoKeysKeyboardBinder.service';
 
 const WINDOW_PROVIDER: ValueProvider = {
     provide: Window,

@@ -1,4 +1,4 @@
-﻿import { KeyboardNote } from './keyboardNote';
+﻿import { KeyboardNote } from './keyboardNote.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()

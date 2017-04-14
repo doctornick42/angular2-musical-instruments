@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { routing } from './routes';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'my-app',
@@ -11,8 +12,9 @@ export class AppComponent {
 
     activeTab: string;
 
-    constructor() {
+    constructor(private router: Router) {
         this.activeTab = 'simple-synth';
+        this.router.navigate(['/simple-synth']);
     }
 
     setActiveTab(tabName: string): void {

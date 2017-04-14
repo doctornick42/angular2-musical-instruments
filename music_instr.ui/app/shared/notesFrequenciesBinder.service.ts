@@ -1,5 +1,5 @@
-﻿import { NoteWithName } from './noteWithName';
-import { Note } from './note';
+﻿import { NoteWithName } from './noteWithName.model';
+import { Note } from './note.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()

@@ -1,16 +1,16 @@
 import { Component, HostListener, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { RouterModule, Route }  from '@angular/router';
-import { NoteWithName } from './noteWithName';
-import { KeyboardNote } from './keyboardNote';
-import { Note } from './note';
-import { AudioContextProvider } from './audioContextProvider';
-import { NotesFrequenciesBinder } from './notesFrequenciesBinder';
-import { PianoKeysKeyboardBinder } from './pianoKeysKeyboardBinder';
+import { NoteWithName } from '../shared/noteWithName.model';
+import { KeyboardNote } from '../shared/keyboardNote.model';
+import { Note } from '../shared/note.model';
+import { AudioContextProvider } from '../shared/audioContext.provider';
+import { NotesFrequenciesBinder } from '../shared/notesFrequenciesBinder.service';
+import { PianoKeysKeyboardBinder } from '../shared/pianoKeysKeyboardBinder.service';
 
 @Component({
     selector: 'simple-synth',
-    templateUrl: 'app/simple-synth.component.html',
-    styleUrls: ['app/simple-synth.component.css']
+    templateUrl: 'app/simple-synth/simple-synth.component.html',
+    styleUrls: ['app/shared/piano-synth.component.css']
 })
 export class SimpleSynthComponent {
 
