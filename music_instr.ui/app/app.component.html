@@ -1,13 +1,19 @@
 ﻿<div class="col-md-8 main">
     <h1>Angular 2 musical instruments</h1>
 
-    <p>
-        Here we go. This app was made to discover some Web Audio API features.
-        Also, this is my 'Hello World' in Angular 2 and Typescript worlds.
-    </p>
-    <p>
-        Right now there's only one instrument here: a simple monophonic synthesizer with a regular piano keyboard.
-    </p>
+    <div class="description-block">
+        <p>
+            Here we go. This app was made to discover some Web Audio API features.
+            Also, this is my 'Hello World' in Angular 2 and Typescript worlds.
+        </p>
+        <p>
+            Right now there are two instruments here: a simple monophonic synthesizer and a polyphonic one, both with a regular piano keyboard.
+        </p>
+        <p class="additional-details">
+            It's easy to hear that there are some bugs here: for example, I'm pretty sure that attack/release parameters don't work correctly.
+            Anyway, later I will fix it when I add new parameters and concentrate on a sound process.
+        </p>
+    </div>
 
     <div>
         <ul class="nav nav-tabs" role="tablist">
@@ -20,5 +26,7 @@
         </ul>
     </div>
 
-    <router-outlet></router-outlet>
+    <div class="synth-container">
+        <router-outlet></router-outlet>
+    </div>
 </div>
