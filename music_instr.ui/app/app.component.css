@@ -13,3 +13,13 @@ div.synth-container {
     border: 1px solid #ddd;
     border-top: none;
 }
+
+div.description-block {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.additional-details {
+    font-style: italic;
+    font-size: 0.97em;
+}

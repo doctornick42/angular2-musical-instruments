@@ -1,0 +1,44 @@
+﻿<div class="synth">
+    <div class="control-panel settings-panel">
+        <div class="panel-title">
+            <label>settings pannel</label>
+        </div>
+
+        <div class="control-panel-block">
+            <label>wave form:</label>
+            <select [ngModel]="currentWaveForm" (ngModelChange)="onWaveFormChange($event)" name="sel2">
+                <option [value]="i" *ngFor="let i of availableWaveForms">{{i}}</option>
+            </select>
+        </div>
+
+        <div class="control-panel-block wave-visualizer-container">
+            <wave-visualizer [waveAnalyser]="waveAnalyzer"></wave-visualizer>
+        </div>
+    </div>
+    <div class="control-panel sliders-panel">
+        <div class="panel-title">
+            <label>sliders pannel</label>
+        </div>
+        <div class="range-block">
+            <label>level: </label>
+            <input [(ngModel)]="volume" type="range" min="0" max="100" />
+        </div>
+        <div class="range-block">
+            <label>release: </label>
+            <input [(ngModel)]="release" type="range" min="0" max="100" />
+        </div>
+        <div class="range-block">
+            <label>attack: </label>
+            <input [(ngModel)]="attack" type="range" min="0" max="100" />
+        </div>
+    </div>
+
+    <div class="keyboard">
+        <ul>
+            <template ngFor let-note [ngForOf]="frequencies | keys" let-i="index">
+                <li *ngIf="!note.value.isBlackPianoKey" class="key white" (mousedown)="playSound(note.key)" (mouseup)="muteSound(note.key)" [ngClass]="{ pressed: isKeyPressed(note.key) }"></li>
+                <li *ngIf="note.value.isBlackPianoKey" class="key black" (mousedown)="playSound(note.key)" (mouseup)="muteSound(note.key)" [ngClass]="{ pressed: isKeyPressed(note.key) }"></li>
+            </template>
+        </ul>
+    </div>
+</div>

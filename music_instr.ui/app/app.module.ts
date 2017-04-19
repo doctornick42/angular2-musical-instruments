@@ -1,16 +1,19 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { ValueProvider } from '@angular/core';
+import { AlertModule, TabsModule } from 'ng2-bootstrap';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent }  from './app.component';
-import { SimpleSynthComponent } from './simple-synth.component';
-import { WaveVisualizerComponent } from './wave-visualizer.component';
-
-import { ValueProvider } from '@angular/core';
-
-import { KeysPipe } from './keysPipe';
-
-import { AlertModule, TabsModule } from 'ng2-bootstrap';
+import { SimpleSynthComponent } from './simple-synth/simple-synth.component';
+import { WaveVisualizerComponent } from './shared/wave-visualizer.component';
+import { PolyphonicSynthComponent } from './polyphonic-synth/polyphonic-synth.component';
+import { KeysPipe } from './shared/keysPipe.pipe';
+import { routing } from './routes';
+import { AudioContextProvider } from './shared/audioContext.provider';
+import { NotesFrequenciesBinder } from './shared/notesFrequenciesBinder.service';
+import { PianoKeysKeyboardBinder } from './shared/pianoKeysKeyboardBinder.service';
 
 const WINDOW_PROVIDER: ValueProvider = {
     provide: Window,
@@ -22,17 +25,23 @@ const WINDOW_PROVIDER: ValueProvider = {
         AlertModule.forRoot(),
         TabsModule.forRoot(),
         BrowserModule,
-        FormsModule
+        FormsModule,
+        RouterModule,
+        routing
     ],
     declarations: [
         AppComponent,
         SimpleSynthComponent,
         WaveVisualizerComponent,
+        PolyphonicSynthComponent,
         KeysPipe
     ],
     bootstrap: [AppComponent],
     providers: [
-        WINDOW_PROVIDER
+        WINDOW_PROVIDER,
+        AudioContextProvider,
+        PianoKeysKeyboardBinder,
+        NotesFrequenciesBinder
     ]
 })
 export class AppModule { }
