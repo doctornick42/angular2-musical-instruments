@@ -1,0 +1,29 @@
+﻿<div>
+    <div class="control-panel sliders-panel">
+        <div class="panel-title">
+            <label>sliders pannel</label>
+        </div>
+        <div class="range-block">
+            <label>min frequency: </label>
+            <input [(ngModel)]="minFrequency" type="range" min="0" max="20000" />
+        </div>
+        <div class="range-block">
+            <label>max frequency: </label>
+            <input [(ngModel)]="maxFrequency" type="range" min="0" max="20000" />
+        </div>
+
+        <div class="range-block">
+            <label>min level: </label>
+            <input [(ngModel)]="minLevel" type="range" min="0" max="100" />
+        </div>
+        <div class="range-block">
+            <label>max level: </label>
+            <input [(ngModel)]="maxLevel" type="range" min="0" max="100" />
+        </div>
+    </div>
+
+    <div class="plot-container">
+        <canvas id="plot-synth-canvas" #plotCanvas (mousemove)="getMouseCoordinates($event)"
+                (mouseup)="stopSound()" (mousedown)="startSound($event)"></canvas>
+    </div>
+</div>

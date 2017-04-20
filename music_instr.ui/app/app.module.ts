@@ -9,6 +9,7 @@ import { AppComponent }  from './app.component';
 import { SimpleSynthComponent } from './simple-synth/simple-synth.component';
 import { WaveVisualizerComponent } from './shared/wave-visualizer.component';
 import { PolyphonicSynthComponent } from './polyphonic-synth/polyphonic-synth.component';
+import { PlotSynthComponent } from './plot-synth/plot-synth.component';
 import { KeysPipe } from './shared/keysPipe.pipe';
 import { routing } from './routes';
 import { AudioContextProvider } from './shared/audioContext.provider';
@@ -34,6 +35,7 @@ const WINDOW_PROVIDER: ValueProvider = {
         SimpleSynthComponent,
         WaveVisualizerComponent,
         PolyphonicSynthComponent,
+        PlotSynthComponent,
         KeysPipe
     ],
     bootstrap: [AppComponent],
