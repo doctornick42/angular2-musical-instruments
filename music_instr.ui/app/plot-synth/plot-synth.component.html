@@ -1,29 +1,54 @@
-﻿<div>
+﻿<div class="synth plot-synth">
+    <div class="control-panel settings-panel">
+        <div class="panel-title">
+            <label>settings pannel</label>
+        </div>
+
+        <div class="control-panel-block">
+            <label>wave form:</label>
+            <select [ngModel]="oscillator.type" (ngModelChange)="onWaveFormChange($event)" name="sel2">
+                <option [value]="i" *ngFor="let i of availableWaveForms">{{i}}</option>
+            </select>
+        </div>
+
+        <div class="control-panel-block wave-visualizer-container">
+            <wave-visualizer [waveAnalyser]="waveAnalyzer"></wave-visualizer>
+        </div>
+    </div>
+
     <div class="control-panel sliders-panel">
         <div class="panel-title">
             <label>sliders pannel</label>
         </div>
         <div class="range-block">
-            <label>min frequency: </label>
-            <input [(ngModel)]="minFrequency" type="range" min="0" max="20000" />
+            <label>min freq:</label>
+            <input [(ngModel)]="minFrequency" type="range" min="0" max="15000" />
         </div>
         <div class="range-block">
-            <label>max frequency: </label>
-            <input [(ngModel)]="maxFrequency" type="range" min="0" max="20000" />
+            <label>max freq:</label>
+            <input [(ngModel)]="maxFrequency" type="range" min="0" max="15000" />
         </div>
 
         <div class="range-block">
-            <label>min level: </label>
+            <label>min level:</label>
             <input [(ngModel)]="minLevel" type="range" min="0" max="100" />
         </div>
         <div class="range-block">
-            <label>max level: </label>
+            <label>max level:</label>
             <input [(ngModel)]="maxLevel" type="range" min="0" max="100" />
         </div>
     </div>
 
-    <div class="plot-container">
-        <canvas id="plot-synth-canvas" #plotCanvas (mousemove)="getMouseCoordinates($event)"
-                (mouseup)="stopSound()" (mousedown)="startSound($event)"></canvas>
+    <div class="plot-with-info">
+        <label class="y-max">{{maxLevel}}</label>
+        <label class="y-min">{{minLevel}}</label>
+        <label class="x-min">{{minFrequency}}</label>
+        <label class="x-max">{{maxFrequency}}</label>
+
+        <div class="plot-container">
+            <canvas id="plot-synth-canvas" #plotCanvas (mousemove)="firePlotPoint($event)"
+                    (mouseup)="stopSound()" (mousedown)="startSound($event)">
+            </canvas>
+        </div>
     </div>
 </div>

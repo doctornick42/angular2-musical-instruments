@@ -44,7 +44,7 @@ export class PlotSynthComponent {
     private _width: number = 0;
 
     minFrequency: number = 30;
-    maxFrequency: number = 15000;
+    maxFrequency: number = 5000;
     minLevel: number = 0;
     maxLevel: number = 100; 
 
@@ -74,12 +74,9 @@ export class PlotSynthComponent {
         this.canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
 
         this.canvasCtx.beginPath();
-
-        console.log('canvas width: ' + this._width);
-        console.log('canvas height: ' + this._height);
     };
 
-    getMouseCoordinates(event: MouseEvent) {
+    firePlotPoint(event: MouseEvent) {
         if (this.mouseDown) {
             var rect = this.canvas.nativeElement.getBoundingClientRect();
 
@@ -95,18 +92,12 @@ export class PlotSynthComponent {
                 + this.minLevel / 100;
 
             this.playSound(frequency, level);
-
-            console.log("x: " + absoluteCoords.x + ", y: " + absoluteCoords.y);
-            console.log("frequency: " + frequency + ", level: " + level);
         }
     }
 
-    private convertCoordinateToSoundParameter(coordinateVal: number, coordinateMax: number,
-        parameterMin: number, parameterMax: number) {
-
-        var convertionRate = coordinateVal / coordinateMax;
-        return (parameterMax - parameterMin) * convertionRate + parameterMin;
-    }
+    onWaveFormChange(newValue: string) {
+        this.oscillator.type = newValue;
+    };
 
     playSound(frequency: number, level: number) {
         this.oscillator.frequency.value = frequency;
@@ -115,12 +106,19 @@ export class PlotSynthComponent {
 
     startSound(event: MouseEvent) {
         this.mouseDown = true;
-        this.getMouseCoordinates(event);
+        this.firePlotPoint(event);
     }
 
     stopSound() {
         this.mouseDown = false;
         this.volumeFilter.gain.value = 0;
+    }
+
+    private convertCoordinateToSoundParameter(coordinateVal: number, coordinateMax: number,
+        parameterMin: number, parameterMax: number) {
+
+        var convertionRate = coordinateVal / coordinateMax;
+        return (parameterMax - parameterMin) * convertionRate + parameterMin;
     }
 }
 

@@ -1,12 +1,56 @@
-﻿.plot-container {
+﻿.plot-synth {
+    min-height: 450px;
+}
+
+.plot-with-info {
+    display: block;
+    width: 95%;
+    margin: auto;
+    margin-bottom: 15px;
+    height: 40%;
+
+    min-height: 200px;
+    min-width: 200px;
+
+    bottom: 15px;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+}
+
+.plot-container {
     display: block;
 
-    width: 50%;
-    height: 25vw;
+    height: 90%;
+    width: 90%;
 
     min-height: 180px;
     min-width: 180px;
     border: 1px solid #000;
+    
+    margin: auto;
+}
 
-    margin: 15px;
+.plot-with-info label.y-max {
+    position: absolute;
+    top: -1%;
+    left: 0%;
+}
+
+.plot-with-info label.y-min {
+    position: absolute;
+    bottom: 10px;
+    left: 0px;
+}
+
+.plot-with-info label.x-min {
+    position: absolute;
+    bottom: -5%;
+    left: 5%;
+}
+
+.plot-with-info label.x-max {
+    position: absolute;
+    bottom: -5%;
+    right: 5%;
 }
