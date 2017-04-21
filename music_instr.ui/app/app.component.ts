@@ -13,8 +13,7 @@ export class AppComponent {
     activeTab: string;
 
     constructor(private router: Router) {
-        this.activeTab = 'simple-synth';
-        this.router.navigate(['/simple-synth']);
+        this.setActiveTab('simple-synth');
     }
 
     setActiveTab(tabName: string): void {
