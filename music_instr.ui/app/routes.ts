@@ -8,7 +8,7 @@ export const routes: Routes = [
     ...SimpleSynthComponentRoutes,
     ...PolyphonicSynthComponentRoutes,
     ...PlotSynthComponentRoutes,
-    { path: '', component: PlotSynthComponent },
+    { path: '', component: SimpleSynthComponent },
     { path: '**', redirectTo: '/' }
 ];
 
