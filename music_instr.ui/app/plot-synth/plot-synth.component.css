@@ -54,3 +54,7 @@
     bottom: -5%;
     right: 5%;
 }
+
+canvas {
+    cursor: pointer;
+}

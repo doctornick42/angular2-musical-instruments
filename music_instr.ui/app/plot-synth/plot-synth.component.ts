@@ -9,7 +9,7 @@ import { AudioContextProvider } from '../shared/audioContext.provider';
 @Component({
     selector: 'plot-synth',
     templateUrl: 'app/plot-synth/plot-synth.component.html',
-    styleUrls: [ 'app/plot-synth/plot-synth.component.css' ]
+    styleUrls: ['app/plot-synth/plot-synth.component.css']
 })
 export class PlotSynthComponent {
     audioCtx: AudioContext;
@@ -43,10 +43,13 @@ export class PlotSynthComponent {
     private _height: number = 0;
     private _width: number = 0;
 
+    private _prevX: number = 0;
+    private _prevY: number = 0;
+
     minFrequency: number = 30;
     maxFrequency: number = 5000;
     minLevel: number = 0;
-    maxLevel: number = 100; 
+    maxLevel: number = 100;
 
     mouseDown: boolean = false;
 
@@ -67,11 +70,11 @@ export class PlotSynthComponent {
 
         this.canvasCtx.clearRect(0, 0, this._width, this._height);
 
-        this.canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+        this.canvasCtx.fillStyle = '#c8c8c8';
         this.canvasCtx.fillRect(0, 0, this._width, this._height);
 
         this.canvasCtx.lineWidth = 2;
-        this.canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+        this.canvasCtx.strokeStyle = '#000';
 
         this.canvasCtx.beginPath();
     };
@@ -92,6 +95,13 @@ export class PlotSynthComponent {
                 + this.minLevel / 100;
 
             this.playSound(frequency, level);
+            if (absoluteCoords.x != this._prevX || absoluteCoords.y != this._prevY) {
+                this.eraseNoteLine(this._prevX, this._prevY);
+            }
+            this.drawNoteLine(absoluteCoords.x, absoluteCoords.y);
+
+            this._prevX = absoluteCoords.x;
+            this._prevY = absoluteCoords.y;
         }
     }
 
@@ -109,9 +119,28 @@ export class PlotSynthComponent {
         this.firePlotPoint(event);
     }
 
-    stopSound() {
+    stopSound(event: MouseEvent) {
         this.mouseDown = false;
         this.volumeFilter.gain.value = 0;
+
+        var rect = this.canvas.nativeElement.getBoundingClientRect();
+        var absoluteCoords = {
+            x: event.clientX - rect.left,
+            y: event.clientY - rect.top
+        };
+        this.eraseNoteLine(absoluteCoords.x, absoluteCoords.y);
+    }
+
+    drawNoteLine(xCoord: number, yCoord: number) {
+        this.canvasCtx.beginPath();
+        this.canvasCtx.strokeStyle = '#000';
+        this.canvasCtx.moveTo(xCoord, this._height);
+        this.canvasCtx.lineTo(xCoord, yCoord);
+        this.canvasCtx.stroke();
+    }
+
+    eraseNoteLine(xCoord: number, yCoord: number) {
+        this.canvasCtx.fillRect(xCoord - 2, yCoord, 4, this._height - yCoord + 1);
     }
 
     private convertCoordinateToSoundParameter(coordinateVal: number, coordinateMax: number,

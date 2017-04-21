@@ -47,7 +47,7 @@
 
         <div class="plot-container">
             <canvas id="plot-synth-canvas" #plotCanvas (mousemove)="firePlotPoint($event)"
-                    (mouseup)="stopSound()" (mousedown)="startSound($event)">
+                    (mouseup)="stopSound($event)" (mousedown)="startSound($event)">
             </canvas>
         </div>
     </div>
